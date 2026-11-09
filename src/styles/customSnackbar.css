@@ -1,0 +1,85 @@
+/* AFC-style toast: coloured icon, title + message, close button, shrinking time bar */
+.afc-toast {
+  --tone: #0277bd;
+  --tone-soft: rgba(2, 119, 189, .14);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: min(380px, calc(100vw - 32px));
+  padding: 14px 10px 16px 14px;
+  border-radius: 14px;
+  background: var(--toast-bg, #ffffff);
+  color: var(--toast-fg, #15212b);
+  border: 1px solid var(--toast-border, #dce6ed);
+  border-left: 4px solid var(--tone);
+  box-shadow: 0 10px 30px rgba(10, 30, 50, .18), 0 2px 6px rgba(10, 30, 50, .08);
+  font-family: inherit;
+}
+.afc-toast-success { --tone: #17784a; --tone-soft: rgba(23, 120, 74, .14); }
+.afc-toast-error   { --tone: #c62828; --tone-soft: rgba(198, 40, 40, .14); }
+.afc-toast-warning { --tone: #b26a00; --tone-soft: rgba(178, 106, 0, .16); }
+.afc-toast-info    { --tone: #0277bd; --tone-soft: rgba(2, 119, 189, .14); }
+
+.afc-toast-icon {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--tone-soft);
+  color: var(--tone);
+}
+.afc-toast-body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; padding-top: 1px; }
+.afc-toast-title { font-size: 14.5px; font-weight: 600; line-height: 1.3; }
+.afc-toast-message { font-size: 13.5px; line-height: 1.45; opacity: .85; overflow-wrap: anywhere; }
+.afc-toast-action {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 0;
+  background: var(--tone-soft);
+  color: var(--tone);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.afc-toast-action:hover { filter: brightness(1.1); }
+.afc-toast-action:focus-visible { outline: 2px solid var(--tone); outline-offset: 2px; }
+.afc-toast-close.MuiIconButton-root { flex: none; margin-top: -4px; color: inherit; opacity: .6; }
+.afc-toast-close.MuiIconButton-root:hover { opacity: 1; }
+
+.afc-toast-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 100%;
+  background: var(--tone);
+  opacity: .55;
+  transform-origin: left;
+  animation-name: afc-toast-shrink;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+/* MUI pauses auto-hide while hovered, so pause the bar too */
+.afc-toast:hover .afc-toast-progress { animation-play-state: paused; }
+@keyframes afc-toast-shrink { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+
+/* Dark theme */
+.afc-toast.dark {
+  --toast-bg: #1b242b;
+  --toast-fg: #e0e8ee;
+  --toast-border: #2a3640;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .5);
+}
+.afc-toast.dark.afc-toast-success { --tone: #7ad6a2; --tone-soft: rgba(122, 214, 162, .16); }
+.afc-toast.dark.afc-toast-error   { --tone: #ffb4ab; --tone-soft: rgba(255, 180, 171, .16); }
+.afc-toast.dark.afc-toast-warning { --tone: #f3c368; --tone-soft: rgba(243, 195, 104, .16); }
+.afc-toast.dark.afc-toast-info    { --tone: #8dcfff; --tone-soft: rgba(141, 207, 255, .16); }
+
+@media (prefers-reduced-motion: reduce) { .afc-toast-progress { animation: none; } }
