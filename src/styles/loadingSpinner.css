@@ -1,0 +1,71 @@
+/* AFC-style loader: soft glow, two spinning rings, logo in the middle, "Loading" with bouncing dots */
+.loading-modal-backdrop.MuiBackdrop-root {
+  background: rgba(8, 20, 30, .45);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+.loading-spinner-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 28px 40px 22px;
+  border-radius: 24px;
+  background: var(--loader-card, #ffffff);
+  color: var(--loader-fg, #15212b);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, .25);
+  outline: none;
+}
+.loading-spinner-box.dark { --loader-card: #151c21; --loader-fg: #e0e8ee; }
+.loading-spinner-inline { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; padding: 40px 16px; min-height: 50vh; }
+
+.afc-loader { position: relative; width: 96px; height: 96px; display: grid; place-items: center; }
+.afc-loader-glow {
+  position: absolute;
+  inset: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(30, 155, 230, .45), rgba(30, 155, 230, 0) 70%);
+  animation: afc-loader-pulse 1.6s ease-in-out infinite;
+}
+.afc-loader-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 4px solid transparent;
+  border-top-color: #0277bd;
+  border-right-color: #1e9be6;
+  animation: afc-loader-spin 1s cubic-bezier(.55, .15, .45, .85) infinite;
+}
+.afc-loader-ring-slow {
+  inset: 9px;
+  border-width: 3px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-bottom-color: #ffc94a;
+  border-left-color: rgba(255, 201, 74, .35);
+  animation-duration: 1.8s;
+  animation-direction: reverse;
+}
+.dark .afc-loader-ring { border-top-color: #8dcfff; border-right-color: #4fb3f6; }
+.dark .afc-loader-ring-slow { border-top-color: transparent; border-right-color: transparent; border-bottom-color: #ffc94a; }
+.afc-loader-icon { position: relative; animation: afc-loader-bob 1.6s ease-in-out infinite; }
+
+.loading-text { margin: 0; font-size: 15px; font-weight: 500; letter-spacing: .01em; display: inline-flex; align-items: baseline; }
+.loading-dots { display: inline-flex; gap: 3px; margin-left: 4px; }
+.loading-dots i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: .3; animation: afc-loader-dot 1.2s infinite; }
+.loading-dots i:nth-child(2) { animation-delay: .15s; }
+.loading-dots i:nth-child(3) { animation-delay: .3s; }
+
+@keyframes afc-loader-spin { to { transform: rotate(360deg); } }
+@keyframes afc-loader-pulse { 0%, 100% { transform: scale(.85); opacity: .7; } 50% { transform: scale(1.12); opacity: 1; } }
+@keyframes afc-loader-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes afc-loader-dot { 0%, 100% { opacity: .25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .afc-loader-ring { animation-duration: 3s; }
+  .afc-loader-glow, .afc-loader-icon, .loading-dots i { animation: none; }
+}

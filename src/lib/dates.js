@@ -1,0 +1,10 @@
+export const pad = n => String(n).padStart(2, "0");
+export const dstr = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+export const parseD = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+export const addDays = (s, n) => { const d = parseD(s); d.setDate(d.getDate() + n); return dstr(d); };
+export const addMonths = (ym, n) => { let [y, m] = ym.split("-").map(Number); m += n; while (m > 12) { m -= 12; y++; } while (m < 1) { m += 12; y--; } return `${y}-${pad(m)}`; };
+export const todayStr = () => dstr(new Date());
+export const curYm = () => todayStr().slice(0, 7);
+export const monthEnd = ym => { const [y, m] = ym.split("-").map(Number); return `${ym}-${pad(new Date(y, m, 0).getDate())}`; };
+export const fmtTime = t => { if (!t) return ""; let [h, m] = t.split(":").map(Number); const ap = h >= 12 ? "PM" : "AM"; h = h % 12 || 12; return `${h}:${pad(m)} ${ap}`; };
+export const endTime = (t, mins) => { const [h, m] = t.split(":").map(Number); const x = h * 60 + m + (mins || 0); return `${pad(Math.floor(x / 60) % 24)}:${pad(x % 60)}`; };
