@@ -209,6 +209,15 @@ const extra = {
   adm_no_class: ["None of this student's classes has an admission fee", "මෙම සිසුවාගේ කිසිදු පන්තියකට ඇතුළත් වීමේ ගාස්තුවක් නැත", "இந்த மாணவரின் எந்த வகுப்புக்கும் சேர்க்கைக் கட்டணம் இல்லை"],
   adm_tpl: ["Dear {parent}, the one-time admission fee of {amount} for {student}'s {class} class is due. Thank you! – {tutor}", "ආදරණීය {parent}, {student}ගේ {class} පන්තිය සඳහා {amount}ක එක් වරක් ගෙවිය යුතු ඇතුළත් වීමේ ගාස්තුව තවම ගෙවිය යුතුව ඇත. ස්තූතියි! – {tutor}", "அன்புள்ள {parent}, {student} இன் {class} வகுப்புக்கான ஒருமுறை சேர்க்கைக் கட்டணம் {amount} செலுத்த வேண்டியுள்ளது. நன்றி! – {tutor}"],
   the_organiser: ["the person who invited you", "ඔබට ආරාධනා කළ පුද්ගලයා", "உங்களை அழைத்தவர்"],
+  sub_students: ["Everyone you teach, their classes and fee status", "ඔබ උගන්වන සියලු දෙනා, ඔවුන්ගේ පන්ති සහ ගාස්තු තත්ත්වය", "நீங்கள் கற்பிக்கும் அனைவரும், அவர்களின் வகுப்புகள் மற்றும் கட்டண நிலை"],
+  sub_classes: ["Your classes, weekly timetable and fees", "ඔබේ පන්ති, සතිපතා කාලසටහන සහ ගාස්තු", "உங்கள் வகுப்புகள், வாராந்திர அட்டவணை மற்றும் கட்டணங்கள்"],
+  sub_attendance: ["Mark who came to each class", "එක් එක් පන්තියට පැමිණි අය සටහන් කරන්න", "ஒவ்வொரு வகுப்புக்கும் வந்தவர்களைக் குறிக்கவும்"],
+  sub_fees: ["Payments received and fees still due", "ලැබුණු ගෙවීම් සහ තවම ලැබිය යුතු ගාස්තු", "பெற்ற கொடுப்பனவுகள் மற்றும் நிலுவைக் கட்டணங்கள்"],
+  sub_reminders: ["Ready-to-send messages for families", "පවුල් සඳහා යැවීමට සූදානම් පණිවිඩ", "குடும்பங்களுக்கு அனுப்பத் தயாரான செய்திகள்"],
+  sub_settings: ["Your details, language, messages and data", "ඔබේ විස්තර, භාෂාව, පණිවිඩ සහ දත්ත", "உங்கள் விவரங்கள், மொழி, செய்திகள் மற்றும் தரவு"],
+  sub_admin: ["Tutors, sign-ups and feedback", "ගුරුවරුන්, ලියාපදිංචි වීම් සහ අදහස්", "ஆசிரியர்கள், பதிவுகள் மற்றும் கருத்துகள்"],
+  menu_main: ["Main", "ප්‍රධාන", "முதன்மை"],
+  menu_more: ["More", "තවත්", "மேலும்"],
 };
 
 export default extra;

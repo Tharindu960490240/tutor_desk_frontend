@@ -7,7 +7,7 @@ import LoadingSpinner from "../components/LoadingSpinner.jsx";
 /* ---------- theme mode (dark is default) ---------- */
 const ModeCtx = createContext(null);
 export function ModeProvider({ children, render }) {
-  const [mode, setMode] = useState(() => { try { return localStorage.getItem("td-theme") === "light" ? "light" : "dark"; } catch { return "dark"; } });
+  const [mode, setMode] = useState(() => { try { return localStorage.getItem("td-theme") === "dark" ? "dark" : "light"; } catch { return "light"; } });
   const value = useMemo(() => {
     const set = m => { setMode(m); try { localStorage.setItem("td-theme", m); } catch { /* ignore */ } };
     return { mode, setMode: set, toggle: () => set(mode === "dark" ? "light" : "dark") };

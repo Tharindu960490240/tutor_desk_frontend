@@ -109,7 +109,7 @@ export default function Attendance() {
     <SectionCard>
       <Stack direction="row" sx={{ alignItems: "center", gap: 1.5, mb: 1.5, flexWrap: "wrap" }}>
         <ColorBar color={c.color} />
-        <Box sx={{ flex: 1, minWidth: 0 }}>
+        <Box sx={{ flex: "1 1 220px", minWidth: 0 }}>
           <Typography variant="h6" component="h2">{c.name}</Typography>
           <Stack direction="row" sx={{ alignItems: "center", gap: 0.75, color: "text.secondary", fontSize: 13.5 }}>
             <ScheduleRounded sx={{ fontSize: 16 }} />

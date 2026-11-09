@@ -60,7 +60,7 @@ function PasswordDialog({ onClose }) {
   return (
     <Dialog open onClose={onClose} fullWidth maxWidth="xs" slotProps={{ paper: { component: "form", onSubmit: submit, noValidate: true } }}>
       <DialogTitle>{t("change_pw")}</DialogTitle>
-      <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 1.75, pt: "8px !important" }}>
+      <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 1.75, pt: "20px !important" }}>
         <PasswordField label={t("current_pw")} autoComplete="current-password" autoFocus {...bind("cur")} helperText={show("cur") ? t("pw_required") : ""} />
         <PasswordField label={t("new_pw")} autoComplete="new-password" {...bind("next")} helperText={show("next") ? t("pw_weak") : ""} />
         <PasswordField label={t("confirm_pw")} autoComplete="new-password" showToggle={false} {...bind("again")} helperText={show("again") ? t("pw_mismatch") : ""} />
@@ -76,18 +76,22 @@ export default function Settings() {
   const D = useDomain(); const { t, lang } = useI18n(); const actions = useActions(); const snack = useSnack(); const confirm = useConfirm(t);
   const dlg = useDialogs(); const { signOut } = useAuth(); const { mode, setMode } = useMode(); const withLoading = useLoading();
   const st = D.settings;
-  const [f, setF] = useState(() => ({ tutorName: st.tutorName || "", currency: st.currency || "Rs", cc: st.cc || "", lang: st.lang || lang, tpl: { fee: { ...D.tpl.fee }, cls: { ...D.tpl.cls } } }));
+  const [f, setF] = useState(() => ({ tutorName: st.tutorName || "", currency: st.currency || "Rs", cc: st.cc || "", tpl: { fee: { ...D.tpl.fee }, cls: { ...D.tpl.cls } } }));
   const [tplLang, setTplLang] = useState(lang);
   const [busy, setBusy] = useState(false);
   const setTpl = (kind, v) => setF(x => ({ ...x, tpl: { ...x.tpl, [kind]: { ...x.tpl[kind], [tplLang]: v } } }));
 
+  // App language applies immediately (no need to press Save), like the theme
+  const changeLang = v => {
+    try { localStorage.setItem("td-lang", v); } catch { /* ignore */ }
+    actions.saveSettings({ lang: v }).catch(() => snack(t("try_again_msg"), "error"));
+  };
   const save = async e => {
     e.preventDefault(); setBusy(true);
     const tpl = { fee: {}, cls: {} };
     for (const kind of ["fee", "cls"]) for (const l of LANGS) { const v = (f.tpl[kind][l] || "").trim(); tpl[kind][l] = v && v !== DEFAULT_TPL[kind][l] ? v : ""; }
     try {
-      try { localStorage.setItem("td-lang", f.lang); } catch { /* ignore */ }
-      await withLoading(actions.saveSettings({ tutorName: f.tutorName.trim(), currency: f.currency.trim() || "Rs", cc: f.cc.replace(/\D/g, ""), lang: f.lang, tpl }));
+      await withLoading(actions.saveSettings({ tutorName: f.tutorName.trim(), currency: f.currency.trim() || "Rs", cc: f.cc.replace(/\D/g, ""), tpl }));
       snack(t("settings_saved"));
     } catch { snack(t("try_again_msg"), "error"); }
     setBusy(false);
@@ -109,7 +113,7 @@ export default function Settings() {
       <SectionCard icon={BadgeRounded} title={t("your_details")}>
         <Stack spacing={2.25}>
           <Box><Label>{t("app_lang")}</Label>
-            <ToggleButtonGroup exclusive size="small" color="primary" value={f.lang} onChange={(e, v) => v && setF(x => ({ ...x, lang: v }))}>
+            <ToggleButtonGroup exclusive size="small" color="primary" value={lang} onChange={(e, v) => v && changeLang(v)}>
               {LANGS.map(l => <ToggleButton key={l} value={l} sx={{ px: 2 }}>{LANG_NAMES[l]}</ToggleButton>)}
             </ToggleButtonGroup></Box>
           <Box><Label>{t("theme")}</Label>

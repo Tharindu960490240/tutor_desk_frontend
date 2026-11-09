@@ -34,7 +34,7 @@ export default function Classes() {
         const days = new Set(sched.map(s => s.day));
         const todays = D.meetingsOnDate(td).filter(o => o.c.id === c.id);
         return (
-          <Card key={c.id} sx={{ position: "relative", overflow: "hidden", "&::before": { content: '""', position: "absolute", inset: "0 0 auto 0", height: 6, bgcolor: c.color } }}>
+          <Card key={c.id} sx={{ position: "relative", overflow: "hidden", "&::before": { content: '""', position: "absolute", inset: "0 0 auto 0", height: 4, bgcolor: c.color } }}>
             <CardContent sx={{ pt: 3, display: "flex", flexDirection: "column", gap: 1.5, height: "100%" }}>
               <Stack direction="row" sx={{ alignItems: "flex-start" }}>
                 <Box sx={{ flex: 1, minWidth: 0 }}>
@@ -84,9 +84,9 @@ export default function Classes() {
                 {+c.admissionFee > 0 && <KV icon={HowToRegRounded}>{t("adm_fee")}: {D.money(c.admissionFee)}</KV>}
                 <KV icon={HowToRegRounded}>{t("att_rate", { p: pct(rate) })}</KV>
               </Stack>
-              <Stack direction="row" spacing={1} sx={{ mt: "auto", pt: 1 }}>
-                <Button size="small" variant="tonal" startIcon={<FactCheckRounded />} onClick={() => nav(`/attendance?cid=${c.id}&date=${td}${todays[0] ? "&time=" + todays[0].s.time : ""}`)}>{t("nav_attendance")}</Button>
-                <Button size="small" startIcon={<EventRepeatRounded />} onClick={() => open.changeMeeting(c.id)}>{t("change_this")}</Button>
+              <Stack direction="row" sx={{ mt: "auto", pt: 1.5, gap: 1, flexWrap: "wrap", borderTop: 1, borderColor: "divider", "& .MuiButton-root": { whiteSpace: "nowrap", flex: "1 1 auto", px: 1.25 } }}>
+                <Button size="small" variant="outlined" startIcon={<FactCheckRounded />} onClick={() => nav(`/attendance?cid=${c.id}&date=${td}${todays[0] ? "&time=" + todays[0].s.time : ""}`)}>{t("nav_attendance")}</Button>
+                <Button size="small" variant="outlined" color="inherit" sx={{ borderColor: "divider" }} startIcon={<EventRepeatRounded />} onClick={() => open.changeMeeting(c.id)}>{t("change_this")}</Button>
               </Stack>
             </CardContent>
           </Card>

@@ -1,5 +1,4 @@
 import { Avatar, Box, Card, CardContent, Chip, IconButton, LinearProgress, Stack, Typography, Button, Tooltip } from "@mui/material";
-import { display } from "../theme.js";
 import { styled, alpha, useTheme } from "@mui/material/styles";
 import { avColor, initials } from "../lib/domain.js";
 import { useI18n } from "../i18n/index.jsx";
@@ -10,7 +9,7 @@ import { CheckCircleRounded, ContentCopyRounded, RemoveRounded, ScheduleRounded,
 export const tones = theme => theme.palette.tones;
 
 export function StudentAvatar({ name, size = 40 }) {
-  return <Avatar aria-hidden sx={{ width: size, height: size, fontSize: size * 0.36, fontWeight: 600, bgcolor: avColor(name), color: "#fff", fontFamily: display }}>{initials(name)}</Avatar>;
+  return <Avatar aria-hidden sx={{ width: size, height: size, fontSize: size * 0.36, fontWeight: 600, bgcolor: avColor(name), color: "#fff" }}>{initials(name)}</Avatar>;
 }
 
 /** Coloured status pill. tone: good | warn | bad | none | info */
@@ -19,7 +18,7 @@ export function Pill({ tone = "none", icon, children, sx }) {
   const map = { good: [k.goodBg, k.good], warn: [k.warnBg, k.warn], bad: [k.badBg, k.bad], none: [k.surface2, k.text2], info: [k.primaryContainer, k.onPrimaryContainer] };
   const [bg, fg] = map[tone];
   return (
-    <Box component="span" sx={{ display: "inline-flex", alignItems: "center", gap: 0.5, height: 26, px: 1.25, borderRadius: 13, fontSize: 12.5, fontWeight: 600, whiteSpace: "nowrap", bgcolor: bg, color: fg, "& svg": { fontSize: 16 }, ...sx }}>
+    <Box component="span" sx={{ display: "inline-flex", alignItems: "center", gap: 0.5, height: 24, px: 1.25, borderRadius: 999, fontSize: 12, fontWeight: 700, whiteSpace: "nowrap", bgcolor: bg, color: fg, "& svg": { fontSize: 16 }, ...sx }}>
       {icon}{children}
     </Box>
   );
@@ -43,13 +42,19 @@ export function EmptyState({ icon: Icon, title, text, action }) {
   );
 }
 
+/** White panel like the AFC portal: 20px padding, bold title row with an icon tile, then content. */
 export function SectionCard({ icon: Icon, iconColor = "primary.main", title, action, children, sx, contentSx }) {
+  const theme = useTheme(), k = tones(theme);
   return (
     <Card sx={{ minWidth: 0, ...sx }}>
       <CardContent sx={{ p: { xs: 2, sm: 2.5 }, "&:last-child": { pb: { xs: 2, sm: 2.5 } }, ...contentSx }}>
         {(title || action) && (
-          <Stack direction="row" spacing={1.25} sx={{ alignItems: "center", mb: 1.5, flexWrap: "wrap", rowGap: 1 }}>
-            {Icon && <Icon sx={{ color: iconColor }} />}
+          <Stack direction="row" spacing={1.5} sx={{ alignItems: "center", flexWrap: "wrap", rowGap: 1, mb: 2 }}>
+            {Icon && (
+              <Box sx={{ width: 36, height: 36, borderRadius: 2.5, display: "grid", placeItems: "center", flex: "none", bgcolor: k.primaryContainer, color: iconColor, "& svg": { fontSize: 20 } }}>
+                <Icon />
+              </Box>
+            )}
             <Typography variant="h6" component="h2" sx={{ flex: "1 0 auto", maxWidth: "100%" }}>{title}</Typography>
             {action}
           </Stack>
@@ -60,20 +65,29 @@ export function SectionCard({ icon: Icon, iconColor = "primary.main", title, act
   );
 }
 
-export function StatCard({ hero, icon: Icon, iconColor, label, value, sub, progress }) {
+/** KPI tile: label + big number on the left, coloured icon tile on the right. */
+export function StatCard({ hero, icon: Icon, iconColor = "primary.main", label, value, sub, progress }) {
   const theme = useTheme(), k = tones(theme);
+  const c = theme.palette.primary.main;
   return (
-    <Card sx={{ height: "100%", ...(hero ? { bgcolor: "primary.main", color: k.onPrimary, borderColor: "transparent" } : {}) }}>
-      <CardContent sx={{ p: 2.25, "&:last-child": { pb: 2.25 }, display: "flex", flexDirection: "column", gap: 0.75 }}>
-        <Stack direction="row" spacing={1} sx={{ alignItems: "center", fontSize: 13, fontWeight: 500, color: hero ? "inherit" : "text.secondary" }}>
-          {Icon && <Icon sx={{ fontSize: 20, color: hero ? "inherit" : iconColor }} />}<span>{label}</span>
+    <Card sx={{ height: "100%" }}>
+      <CardContent sx={{ p: { xs: 2, sm: 2.5 }, "&:last-child": { pb: { xs: 2, sm: 2.5 } }, display: "flex", flexDirection: "column", gap: 1, height: "100%" }}>
+        <Stack direction="row" spacing={1.5} sx={{ alignItems: "flex-start", justifyContent: "space-between" }}>
+          <Box sx={{ minWidth: 0 }}>
+            <Typography sx={{ fontSize: 13, fontWeight: 500, color: "text.secondary", mb: 0.75 }}>{label}</Typography>
+            <Typography className="num" sx={{ fontSize: { xs: 22, sm: 26 }, fontWeight: 700, lineHeight: 1.15, letterSpacing: "-.01em", color: hero ? "primary.main" : "text.primary" }}>{value}</Typography>
+          </Box>
+          {Icon && (
+            <Box sx={{ width: 42, height: 42, borderRadius: 2.5, display: { xs: "none", sm: "grid" }, placeItems: "center", flex: "none", background: hero ? `linear-gradient(135deg, ${c} 0%, ${k.primary2} 100%)` : k.primaryContainer, color: hero ? k.onPrimary : iconColor, "& svg": { fontSize: 22 } }}>
+              <Icon />
+            </Box>
+          )}
         </Stack>
-        <Typography className="num" sx={{ fontFamily: display, fontSize: { xs: 24, sm: 30 }, fontWeight: 600, lineHeight: 1.1 }}>{value}</Typography>
         {progress != null && (
           <LinearProgress variant="determinate" value={progress} aria-hidden
-            sx={{ height: 6, borderRadius: 3, bgcolor: hero ? alpha(k.onPrimary, 0.25) : k.surface3, "& .MuiLinearProgress-bar": { borderRadius: 3, bgcolor: hero ? k.onPrimary : "primary.main" } }} />
+            sx={{ height: 6, borderRadius: 3, bgcolor: k.surface3, "& .MuiLinearProgress-bar": { borderRadius: 3, bgcolor: "primary.main" } }} />
         )}
-        {sub && <Typography variant="body2" sx={{ fontSize: 13, opacity: hero ? 0.85 : 1, color: hero ? "inherit" : "text.secondary" }}>{sub}</Typography>}
+        {sub && <Typography variant="body2" sx={{ fontSize: 12.5, color: "text.secondary", mt: "auto" }}>{sub}</Typography>}
       </CardContent>
     </Card>
   );
@@ -91,7 +105,7 @@ export function ColorBar({ color, h = 36 }) {
 
 export function MessageBox({ children, sx }) {
   const theme = useTheme();
-  return <Box sx={{ bgcolor: tones(theme).surface2, borderRadius: 3.5, px: 1.75, py: 1.25, fontSize: 13.5, whiteSpace: "pre-wrap", mt: 1, ...sx }}>{children}</Box>;
+  return <Box sx={{ bgcolor: tones(theme).surface2, border: `1px solid ${tones(theme).outlineVariant}`, borderRadius: 2, px: 1.75, py: 1.5, fontSize: 13.5, whiteSpace: "pre-wrap", mt: 1, ...sx }}>{children}</Box>;
 }
 
 export function IconTip({ title, children }) {

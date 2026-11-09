@@ -19,7 +19,7 @@ function Shell({ title, onClose, children, actions, onSubmit }) {
         <Box sx={{ flex: 1, minWidth: 0 }}>{title}</Box>
         <IconButton onClick={onClose} aria-label={t("close")}><CloseRounded /></IconButton>
       </DialogTitle>
-      <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2, pt: "8px !important" }}>{children}</DialogContent>
+      <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2, pt: "20px !important" }}>{children}</DialogContent>
       {actions && <DialogActions sx={{ p: 2.5, pt: 1.5, gap: 1, flexWrap: "wrap" }}>{actions}</DialogActions>}
     </Dialog>
   );

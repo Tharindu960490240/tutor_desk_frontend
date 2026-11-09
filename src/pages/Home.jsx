@@ -16,10 +16,10 @@ export function SampleBanner() {
   const [busy, setBusy] = useState(false);
   if (!D.settings.sample) return null;
   return (
-    <Stack direction="row" sx={{ alignItems: "center", gap: 1.5, px: 2, py: 1.5, borderRadius: 4, bgcolor: "action.hover", flexWrap: "wrap" }}>
+    <Stack direction="row" sx={{ alignItems: "center", gap: 1.5, px: 2.25, py: 1.5, borderRadius: 3, bgcolor: "secondary.main", border: 1, borderColor: "primary.main", flexWrap: "wrap" }}>
       <ScienceRounded color="primary" />
       <Box sx={{ flex: "1 1 240px" }}><b>{t("sample_title")}</b> <Typography component="span" color="text.secondary">{t("sample_sub")}</Typography></Box>
-      <Button size="small" variant="tonal" disabled={busy} onClick={async () => { setBusy(true); try { await withLoading(actions.wipe()); snack(t("fresh")); } catch { snack(t("try_again_msg"), "error"); } setBusy(false); }}>{t("clear_sample")}</Button>
+      <Button size="small" variant="outlined" disabled={busy} onClick={async () => { setBusy(true); try { await withLoading(actions.wipe()); snack(t("fresh")); } catch { snack(t("try_again_msg"), "error"); } setBusy(false); }}>{t("clear_sample")}</Button>
     </Stack>
   );
 }

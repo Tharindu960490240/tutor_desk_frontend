@@ -23,7 +23,7 @@ function Shell({ title, onClose, children, actions, wide, onSubmit }) {
         <Box sx={{ flex: 1, minWidth: 0 }}>{title}</Box>
         <IconButton onClick={onClose} aria-label={t("close")}><CloseRounded /></IconButton>
       </DialogTitle>
-      <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2, pt: "8px !important" }}>{children}</DialogContent>
+      <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 2, pt: "20px !important" }}>{children}</DialogContent>
       {actions && <DialogActions sx={{ p: 2.5, pt: 1.5, gap: 1, flexWrap: "wrap" }}>{actions}</DialogActions>}
     </Dialog>
   );
@@ -84,7 +84,7 @@ export function StudentForm({ sid, defaultClassId, onClose }) {
         <Button onClick={onClose}>{t("cancel")}</Button>
         <Button type="submit" variant="contained" disabled={busy}>{s0 ? t("save") : t("add_student")}</Button>
       </>}>
-      <TextField label={t("f_name")} value={f.name} onChange={e => { set("name", e.target.value); setErr(false); }} autoFocus required error={err} helperText={err ? t("f_name_err") : " "} autoComplete="off" />
+      <TextField label={t("f_name")} value={f.name} onChange={e => { set("name", e.target.value); setErr(false); }} autoFocus required error={err} helperText={err ? t("f_name_err") : undefined} autoComplete="off" />
       <Row>
         <TextField label={t("f_parent")} value={f.parent} onChange={e => set("parent", e.target.value)} autoComplete="off" />
         <TextField label={t("f_pphone")} type="tel" value={f.parentPhone} onChange={e => set("parentPhone", e.target.value)} placeholder="077 123 4567" />
@@ -208,7 +208,7 @@ export function ClassForm({ cid, onClose }) {
         <Button onClick={onClose}>{t("cancel")}</Button>
         <Button type="submit" variant="contained" disabled={busy}>{c0 ? t("save") : t("add_class")}</Button>
       </>}>
-      <TextField label={t("c_name")} value={f.name} onChange={e => { set("name", e.target.value); setErr(false); }} placeholder={t("c_name_ph")} autoFocus required error={err} helperText={err ? t("c_name_err") : " "} autoComplete="off" />
+      <TextField label={t("c_name")} value={f.name} onChange={e => { set("name", e.target.value); setErr(false); }} placeholder={t("c_name_ph")} autoFocus required error={err} helperText={err ? t("c_name_err") : undefined} autoComplete="off" />
       <Row>
         <TextField label={t("c_subject")} value={f.subject} onChange={e => set("subject", e.target.value)} />
         <TextField label={t("c_level")} value={f.level} onChange={e => set("level", e.target.value)} />
