@@ -9,7 +9,7 @@ import { useDomain, useActions, useAuth } from "../state/data.jsx";
 import { useSnack, useConfirm, useDialogs, useMode, useLoading } from "../state/ui.jsx";
 import { SectionCard } from "../components/common.jsx";
 import { todayStr } from "../lib/dates.js";
-import { AccountCircleRounded, BadgeRounded, CloudRounded, DarkModeRounded, DeleteForeverRounded, DownloadRounded, FeedbackRounded, LightModeRounded, LockResetRounded, LogoutRounded, SaveRounded, ScienceRounded, SettingsBackupRestoreRounded, ShieldRounded, SmsRounded, UploadFileRounded } from "../icons.jsx";
+import { AccountCircleRounded, BadgeRounded, CloudRounded, DarkModeRounded, DeleteForeverRounded, DownloadRounded, FeedbackRounded, LightModeRounded, LockResetRounded, LogoutRounded, SaveRounded, SettingsBackupRestoreRounded, ShieldRounded, SmsRounded, UploadFileRounded } from "../icons.jsx";
 
 const Label = ({ children }) => <FormLabel sx={{ fontSize: 13, fontWeight: 500, display: "block", mb: 1 }}>{children}</FormLabel>;
 
@@ -105,7 +105,6 @@ export default function Settings() {
     } catch { snack(t("try_again_msg"), "error"); }
   };
   const wipe = async () => { if (await confirm(t("wipe_q"), t("wipe_p"), t("wipe_go"), true)) withLoading(actions.wipe()).then(() => snack(t("wiped"))).catch(() => snack(t("try_again_msg"), "error")); };
-  const sample = async () => { if (await confirm(t("load_sample"), t("restore_p"), t("load_sample"), false)) withLoading(actions.loadSample(todayStr())).then(() => snack(t("sample_loaded"))).catch(() => snack(t("try_again_msg"), "error")); };
   const delAccount = async () => { if (await confirm(t("delete_account_q"), t("delete_account_p"), t("delete_account"), true)) withLoading(actions.deleteAccount()).then(signOut).catch(() => snack(t("try_again_msg"), "error")); };
 
   return (<>
@@ -147,7 +146,6 @@ export default function Settings() {
       <Stack direction="row" sx={{ gap: 1, flexWrap: "wrap" }}>
         <Button variant="tonal" startIcon={<DownloadRounded />} onClick={download}>{t("download_backup")}</Button>
         <Button variant="outlined" startIcon={<SettingsBackupRestoreRounded />} onClick={() => dlg.open(close => <RestoreDialog onClose={close} />)}>{t("restore")}</Button>
-        <Button startIcon={<ScienceRounded />} onClick={sample}>{t("load_sample")}</Button>
         <Button color="error" startIcon={<DeleteForeverRounded />} onClick={wipe}>{t("wipe")}</Button>
       </Stack>
     </SectionCard>

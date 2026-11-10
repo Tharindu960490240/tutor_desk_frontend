@@ -182,7 +182,6 @@ function Tutors() {
               {u.you && <Pill tone="info" sx={{ height: 22, fontSize: 11.5 }}>You</Pill>}
               {u.isAdmin && <Pill tone="info" icon={<ShieldRounded />} sx={{ height: 22, fontSize: 11.5 }}>Admin</Pill>}
               {u.disabled && <Pill tone="bad" icon={<BlockRounded />} sx={{ height: 22, fontSize: 11.5 }}>Suspended</Pill>}
-              {u.sample && <Pill sx={{ height: 22, fontSize: 11.5 }}>Sample data</Pill>}
             </Stack>
             <Typography noWrap variant="body2" color="text.secondary">{u.email}</Typography>
             <Typography variant="caption" color="text.secondary" component="div">

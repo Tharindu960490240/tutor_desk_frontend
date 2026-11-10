@@ -155,7 +155,6 @@ export function useActions() {
       const r = await call("/reminders", "POST", { sid, type, key });
       patch(d => ({ ...d, reminders: [r, ...d.reminders] }));
     },
-    async loadSample(today) { resetAll(await call("/data/sample", "POST", { today })); },
     async importBackup(data) { resetAll(await call("/data/import", "POST", data)); },
     async wipe() { resetAll(await call("/data", "DELETE")); },
     exportBackup: () => api("/data/export"),

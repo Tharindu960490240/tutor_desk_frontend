@@ -8,7 +8,6 @@ import { SectionCard, EmptyState, Pill, tones } from "../components/common.jsx";
 import { ClassMenu, ChangeList } from "../dialogs/schedule.jsx";
 import { pct } from "../lib/domain.js";
 import { curYm, todayStr, fmtTime, endTime } from "../lib/dates.js";
-import { SampleBanner } from "./Home.jsx";
 import { AddRounded, CoPresentRounded, EventRepeatRounded, StopCircleRounded, FactCheckRounded, GroupRounded, HowToRegRounded, LocationOnRounded, ScheduleRounded, SellRounded } from "../icons.jsx";
 
 const KV = ({ icon: I, children }) => <Stack direction="row" spacing={0.75} sx={{ alignItems: "center", fontSize: 13.5, color: "text.secondary", "& svg": { fontSize: 18 } }}><I />{children}</Stack>;
@@ -18,10 +17,9 @@ export default function Classes() {
   const theme = useTheme(), k = tones(theme);
   const ym = curYm();
   const { rows } = useAttendance([ym]);
-  if (!D.classes.length) return (<><SampleBanner /><SectionCard><EmptyState icon={CoPresentRounded} title={t("no_classes")} text={t("no_classes_p")} action={<Button variant="contained" startIcon={<AddRounded />} onClick={() => open.classForm()}>{t("add_class")}</Button>} /></SectionCard></>);
+  if (!D.classes.length) return (<><SectionCard><EmptyState icon={CoPresentRounded} title={t("no_classes")} text={t("no_classes_p")} action={<Button variant="contained" startIcon={<AddRounded />} onClick={() => open.classForm()}>{t("add_class")}</Button>} /></SectionCard></>);
   const td = todayStr();
   return (<>
-    <SampleBanner />
     <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0,1fr))", lg: "repeat(3, minmax(0,1fr))" } }}>
       {D.classes.map(c => {
         const studs = D.studentsIn(c.id);

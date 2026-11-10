@@ -1,35 +1,19 @@
 import { Box, Button, Stack, Typography, List, ListItem, ListItemAvatar, ListItemText, ListItemButton } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useI18n } from "../i18n/index.jsx";
-import { useDomain, useAttendance, useActions } from "../state/data.jsx";
+import { useDomain, useAttendance } from "../state/data.jsx";
 import { useOpeners } from "../dialogs/index.jsx";
-import { useSnack, useLoading } from "../state/ui.jsx";
 import { InlineLoader } from "../components/LoadingSpinner.jsx";
 import { StatCard, SectionCard, EmptyState, StudentAvatar, Pill, StatusPill, TonalIconButton, ColorBar, IconTip } from "../components/common.jsx";
 import { attStats, indexAttendance, slotKey, pct } from "../lib/domain.js";
 import { todayStr, curYm, addMonths, fmtTime, endTime } from "../lib/dates.js";
-import { useState } from "react";
-import { AddCardRounded, AddRounded, CampaignRounded, CelebrationRounded, DoneRounded, FactCheckRounded, GroupsRounded, HistoryRounded, HowToRegRounded, NotificationsRounded, PaymentsRounded, PendingActionsRounded, PersonAddRounded, ReceiptLongRounded, SavingsRounded, ScienceRounded, ThumbUpRounded, TodayRounded, TrendingDownRounded, WavingHandRounded, WeekendRounded } from "../icons.jsx";
-
-export function SampleBanner() {
-  const D = useDomain(); const { t } = useI18n(); const actions = useActions(); const snack = useSnack(); const withLoading = useLoading();
-  const [busy, setBusy] = useState(false);
-  if (!D.settings.sample) return null;
-  return (
-    <Stack direction="row" sx={{ alignItems: "center", gap: 1.5, px: 2.25, py: 1.5, borderRadius: 3, bgcolor: "secondary.main", border: 1, borderColor: "primary.main", flexWrap: "wrap" }}>
-      <ScienceRounded color="primary" />
-      <Box sx={{ flex: "1 1 240px" }}><b>{t("sample_title")}</b> <Typography component="span" color="text.secondary">{t("sample_sub")}</Typography></Box>
-      <Button size="small" variant="outlined" disabled={busy} onClick={async () => { setBusy(true); try { await withLoading(actions.wipe()); snack(t("fresh")); } catch { snack(t("try_again_msg"), "error"); } setBusy(false); }}>{t("clear_sample")}</Button>
-    </Stack>
-  );
-}
+import { AddCardRounded, AddRounded, CampaignRounded, CelebrationRounded, DoneRounded, FactCheckRounded, GroupsRounded, HistoryRounded, HowToRegRounded, NotificationsRounded, PaymentsRounded, PendingActionsRounded, PersonAddRounded, ReceiptLongRounded, SavingsRounded, ThumbUpRounded, TodayRounded, TrendingDownRounded, WavingHandRounded, WeekendRounded } from "../icons.jsx";
 
 export default function Home() {
   const D = useDomain(); const { t, dayLong, longDate, monthOnly, monthLabel, shortDate } = useI18n();
-  const open = useOpeners(); const nav = useNavigate(); const actions = useActions(); const snack = useSnack(); const withLoading = useLoading();
+  const open = useOpeners(); const nav = useNavigate();
   const td = todayStr(), ym = curYm(), prev = addMonths(ym, -1), dow = new Date().getDay();
   const { rows } = useAttendance([ym, prev]);
-  const [busy, setBusy] = useState(false);
   const h = new Date().getHours();
   const greet = t(h < 12 ? "morning" : h < 17 ? "afternoon" : "evening") + (D.settings.tutorName ? ", " + D.settings.tutorName : "");
   const dateLine = `${dayLong(dow)}, ${longDate(td)}`;
@@ -42,7 +26,6 @@ export default function Home() {
           <Stack direction="row" sx={{ justifyContent: "center", gap: 1, flexWrap: "wrap" }}>
             <Button variant="contained" startIcon={<AddRounded />} onClick={() => open.classForm()}>{t("add_first_class")}</Button>
             <Button variant="outlined" startIcon={<PersonAddRounded />} onClick={() => open.studentForm()}>{t("add_student")}</Button>
-            <Button startIcon={<ScienceRounded />} disabled={busy} onClick={async () => { setBusy(true); try { await withLoading(actions.loadSample(td)); snack(t("sample_loaded")); } catch { snack(t("try_again_msg"), "error"); } setBusy(false); }}>{t("load_sample")}</Button>
           </Stack>} />
       </SectionCard>
     </>);
@@ -61,7 +44,6 @@ export default function Home() {
   const recent = D.payments.slice(0, 5);
 
   return (<>
-    <SampleBanner />
     <Stack direction="row" sx={{ alignItems: "flex-end", justifyContent: "space-between", gap: 2, flexWrap: "wrap" }}>
       <Box><Typography color="text.secondary">{dateLine}</Typography><Typography variant="h4" sx={{ fontSize: { xs: 23, sm: 28 } }}>{greet}</Typography></Box>
       <Button variant="tonal" component={RouterLink} to="/reminders" startIcon={<CampaignRounded />}>{t("send_reminders")}</Button>

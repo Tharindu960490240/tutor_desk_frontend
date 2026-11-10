@@ -28,8 +28,6 @@ const extra = {
   per_week_1: ["Once a week", "සතියකට වරක්", "வாரத்திற்கு ஒரு முறை"],
   twice_today: ["{n} sessions on this day", "මෙදින සැසි {n}ක්", "இந்நாளில் {n} அமர்வுகள்"],
   other_classes: ["Not scheduled this day", "මෙදින සැලසුම් කර නැත", "இந்நாளில் திட்டமிடப்படவில்லை"],
-  load_sample: ["Try with sample data", "නියැදි දත්ත සමඟ උත්සාහ කරන්න", "மாதிரித் தரவுடன் முயற்சி"],
-  sample_loaded: ["Sample data loaded", "නියැදි දත්ත පූරණය විය", "மாதிரித் தரவு ஏற்றப்பட்டது"],
   download_backup: ["Download backup", "උපස්ථය බාගන්න", "காப்புப்பிரதியைப் பதிவிறக்கு"],
   restore_file: ["Restore from file", "ගොනුවෙන් ප්‍රතිසාධනය", "கோப்பிலிருந்து மீட்டமை"],
   restore_hint: ["Choose a backup file, or paste backup text below. Backups copied from the older one-page TutorDesk work too.", "උපස්ථ ගොනුවක් තෝරන්න, නැතහොත් පහත උපස්ථ පෙළ අලවන්න. පැරණි TutorDesk වෙතින් පිටපත් කළ උපස්ථද ක්‍රියා කරයි.", "காப்புப்பிரதி கோப்பைத் தேர்வுசெய்யவும் அல்லது கீழே உரையை ஒட்டவும். பழைய TutorDesk காப்புப்பிரதிகளும் வேலை செய்யும்."],

@@ -9,7 +9,6 @@ import { useSnack } from "../state/ui.jsx";
 import { SectionCard, EmptyState, StudentAvatar, Pill, ColorBar, tones } from "../components/common.jsx";
 import { attStats, pct, indexAttendance, slotKey } from "../lib/domain.js";
 import { todayStr, addDays, parseD, fmtTime, endTime } from "../lib/dates.js";
-import { SampleBanner } from "./Home.jsx";
 import { InlineLoader } from "../components/LoadingSpinner.jsx";
 import { AddRounded, CalendarViewMonthRounded, CheckRounded, ChevronLeftRounded, ChevronRightRounded, DoneAllRounded, FactCheckRounded, GroupOffRounded, PersonAddRounded, ScheduleRounded, UpcomingRounded , EventRepeatRounded , EventAvailableRounded } from "../icons.jsx";
 
@@ -75,7 +74,6 @@ export default function Attendance() {
   };
 
   return (<>
-    <SampleBanner />
     <SectionCard>
       <Stack direction="row" sx={{ alignItems: "center", gap: 1, flexWrap: "wrap", mb: 1.75 }}>
         <IconButton aria-label={t("previous")} onClick={() => go({ date: addDays(date, -1), cid: null, time: null })}><ChevronLeftRounded /></IconButton>

@@ -7,7 +7,6 @@ import { useOpeners } from "../dialogs/index.jsx";
 import { SectionCard, EmptyState, StudentAvatar, StatusPill, Pill } from "../components/common.jsx";
 import { attStats, pct } from "../lib/domain.js";
 import { curYm } from "../lib/dates.js";
-import { SampleBanner } from "./Home.jsx";
 import { GroupAddRounded, HowToRegRounded, PersonAddRounded, PersonSearchRounded, SearchRounded } from "../icons.jsx";
 
 export default function Students() {
@@ -19,7 +18,7 @@ export default function Students() {
   const ym = curYm();
   const { rows } = useAttendance([ym]);
 
-  if (!D.students.length) return (<><SampleBanner /><SectionCard><EmptyState icon={GroupAddRounded} title={t("no_students")} text={t("no_students_p")} action={<Button variant="contained" startIcon={<PersonAddRounded />} onClick={() => open.studentForm()}>{t("add_student")}</Button>} /></SectionCard></>);
+  if (!D.students.length) return (<><SectionCard><EmptyState icon={GroupAddRounded} title={t("no_students")} text={t("no_students_p")} action={<Button variant="contained" startIcon={<PersonAddRounded />} onClick={() => open.studentForm()}>{t("add_student")}</Button>} /></SectionCard></>);
 
   const left = D.students.filter(s => s.active === false).length;
   let list = filter === "left" ? D.students.filter(s => s.active === false) : D.activeStudents();
@@ -34,7 +33,6 @@ export default function Students() {
   );
 
   return (<>
-    <SampleBanner />
     <SectionCard>
       <TextField fullWidth type="search" placeholder={t("search_ph")} value={q} onChange={e => setQ(e.target.value)} sx={{ mb: 1.5 }}
         slotProps={{ htmlInput: { "aria-label": t("search_ph") }, input: { startAdornment: <InputAdornment position="start"><SearchRounded /></InputAdornment> } }} />

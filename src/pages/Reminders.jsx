@@ -9,7 +9,6 @@ import { EmptyState, StudentAvatar, MessageBox, MessageActions, LangTag, ColorBa
 import { useOpeners } from "../dialogs/index.jsx";
 import { useChangeText } from "../dialogs/schedule.jsx";
 import { curYm, todayStr, addDays, fmtTime } from "../lib/dates.js";
-import { SampleBanner } from "./Home.jsx";
 import { CampaignRounded, CelebrationRounded, EditNoteRounded, EventAvailableRounded, EventRepeatRounded, EventRounded, ForumRounded, PaymentsRounded, StopCircleRounded } from "../icons.jsx";
 
 function ago(t, iso) { const d = (Date.now() - new Date(iso).getTime()) / 86400000; if (d < 1) return t("ago_today"); if (d < 2) return t("ago_yday"); return t("ago_days", { n: Math.floor(d) }); }
@@ -134,7 +133,6 @@ export default function Reminders() {
   }
 
   return (<>
-    <SampleBanner />
     <Card sx={{ px: { xs: 1.5, sm: 2.5 }, pb: 2 }}>
       <Tabs value={tab} onChange={(e, v) => setTab(v)} sx={{ borderBottom: `1px solid ${k.outlineVariant}` }}>
         <Tab value="fees" icon={<PaymentsRounded />} iconPosition="start" label={t("fee_rem")} />

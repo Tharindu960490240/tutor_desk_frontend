@@ -9,7 +9,6 @@ import { useOpeners } from "../dialogs/index.jsx";
 import { useSnack } from "../state/ui.jsx";
 import { SectionCard, EmptyState, StudentAvatar, StatusPill, StatCard, TonalIconButton, tones } from "../components/common.jsx";
 import { curYm, addMonths } from "../lib/dates.js";
-import { SampleBanner } from "./Home.jsx";
 import { AccountBalanceRounded, AddCardRounded, ChevronLeftRounded, ChevronRightRounded, CreditCardRounded, DeleteRounded, FilterAltOffRounded, HistoryRounded, NotificationsRounded, PaymentsRounded, PendingActionsRounded, ReceiptLongRounded, ReceiptRounded, SavingsRounded, SmartphoneRounded , HowToRegRounded } from "../icons.jsx";
 
 const METHOD_ICON = { cash: PaymentsRounded, bank: AccountBalanceRounded, mobile: SmartphoneRounded, card: CreditCardRounded, other: ReceiptRounded };
@@ -40,7 +39,6 @@ export default function Fees() {
   const grid = { display: "grid", gridTemplateColumns: phone ? "minmax(0,1fr) auto" : "minmax(0,1.6fr) repeat(3, minmax(70px,.6fr)) 110px 96px", alignItems: "center", columnGap: 1.5, rowGap: 0.75, py: 1.5, px: 1 };
 
   return (<>
-    <SampleBanner />
     <Stack direction="row" sx={{ alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 1 }}>
       <Stack direction="row" sx={{ alignItems: "center", gap: 0.5 }}>
         <IconButton aria-label={t("previous")} onClick={() => setYm(addMonths(ym, -1))}><ChevronLeftRounded /></IconButton>
