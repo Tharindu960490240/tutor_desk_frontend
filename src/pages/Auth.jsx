@@ -10,7 +10,8 @@ import { tones } from "../components/common.jsx";
 import Logo from "../components/Logo.jsx";
 import PasswordField, { PasswordRules } from "../components/PasswordField.jsx";
 import { isEmail, isName, isStrongPassword } from "../lib/validation.js";
-import { DarkModeRounded, EmailRounded, LightModeRounded, MarkEmailReadRounded, PersonRounded, VpnKeyRounded } from "../icons.jsx";
+import { DarkModeRounded, EmailRounded, LightModeRounded, MarkEmailReadRounded, MenuBookRounded, PersonRounded, VpnKeyRounded } from "../icons.jsx";
+import { guideUrl, guideAllUrl } from "../lib/guide.js";
 
 function errText(t, x, cfg) {
   const weak = x.code === "invalid" && x.issues?.some?.(i => i.path === "password" || i.path === "next");
@@ -51,7 +52,8 @@ export function AuthFrame({ setLang, children }) {
         </Select>
         <Tooltip title={mode === "dark" ? t("theme_light") : t("theme_dark")}><IconButton onClick={toggle} aria-label={mode === "dark" ? t("theme_light") : t("theme_dark")}>{mode === "dark" ? <LightModeRounded /> : <DarkModeRounded />}</IconButton></Tooltip>
       </Stack>
-      <Card sx={{ width: "min(460px, 100%)" }}>
+      <Stack spacing={2} sx={{ width: "min(460px, 100%)", alignItems: "center" }}>
+      <Card sx={{ width: "100%" }}>
         <CardContent sx={{ p: { xs: 3, sm: 4 } }}>
           <Stack spacing={1.25} sx={{ alignItems: "center", textAlign: "center", mb: 2 }}>
             <Logo size={52} />
@@ -61,6 +63,12 @@ export function AuthFrame({ setLang, children }) {
           {children}
         </CardContent>
       </Card>
+      <Stack direction="row" spacing={1} sx={{ alignItems: "center", flexWrap: "wrap", justifyContent: "center", rowGap: 0.5, pb: 2 }}>
+        <Typography variant="body2" color="text.secondary">{t("guide_new")}</Typography>
+        <Button size="small" variant="outlined" href={guideUrl(lang)} target="_blank" rel="noopener" startIcon={<MenuBookRounded />}>{t("guide_pdf")}</Button>
+        <Link href={guideAllUrl} target="_blank" rel="noopener" variant="body2" sx={{ fontWeight: 600 }}>{t("guide_all")}</Link>
+      </Stack>
+      </Stack>
     </Box>
   );
 }

@@ -11,7 +11,8 @@ import { useAuth, useActions, useDomain } from "../state/data.jsx";
 import { useOpeners } from "../dialogs/index.jsx";
 import { tones } from "./common.jsx";
 import { initials } from "../lib/domain.js";
-import { AddCardRounded, AddRounded, AdminPanelSettingsRounded, CloseRounded, CloudDoneRounded, CloudSyncRounded, CoPresentRounded, DarkModeRounded, FactCheckRounded, FeedbackRounded, GroupRounded, LightModeRounded, LogoutRounded, MenuRounded, NotificationsRounded, PaymentsRounded, PersonAddRounded, SettingsRounded, ShieldRounded, SpaceDashboardRounded } from "../icons.jsx";
+import { guideUrl } from "../lib/guide.js";
+import { AddCardRounded, AddRounded, AdminPanelSettingsRounded, CloseRounded, CloudDoneRounded, CloudSyncRounded, CoPresentRounded, DarkModeRounded, FactCheckRounded, FeedbackRounded, GroupRounded, LightModeRounded, LogoutRounded, MenuBookRounded, MenuRounded, NotificationsRounded, PaymentsRounded, PersonAddRounded, SettingsRounded, ShieldRounded, SpaceDashboardRounded } from "../icons.jsx";
 
 const HEADER = 65;
 const SIDE = 248;
@@ -50,6 +51,7 @@ function SideItem({ item, label, onClick }) {
     "&.active::before": { content: '""', position: "absolute", left: -12, top: 8, bottom: 8, width: 4, borderRadius: "0 4px 4px 0", bgcolor: k.accent },
   };
   const inner = <><Icon /><Box component="span" sx={{ flex: 1, overflow: "hidden", textOverflow: "ellipsis" }}>{label}</Box></>;
+  if (item.href) return <Box component="a" href={item.href} target="_blank" rel="noopener" onClick={onClick} sx={base}>{inner}</Box>;
   if (!item.to) return <Box component="button" type="button" onClick={onClick} sx={base}>{inner}</Box>;
   return <Box component={NavLink} to={item.to} end={item.to === "/"} onClick={onClick} sx={{ ...base, ...active }}>{inner}</Box>;
 }
@@ -60,7 +62,7 @@ function Group({ children }) {
 
 function SideMenu({ isAdmin, onNavigate, onFeedback, onSignOut, phone }) {
   const theme = useTheme(), k = tones(theme);
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0 }}>
       <Box component="nav" aria-label="Main" sx={{ flex: 1, overflowY: "auto", px: 1.5, pt: 1.75, pb: 1, display: "flex", flexDirection: "column", gap: 0.25 }}>
@@ -71,6 +73,7 @@ function SideMenu({ isAdmin, onNavigate, onFeedback, onSignOut, phone }) {
         {isAdmin && <SideItem item={ADMIN} label={t("admin")} onClick={onNavigate} />}
       </Box>
       <Box sx={{ px: 1.5, pt: 1, pb: 1.75, borderTop: `1px solid ${k.outlineVariant}`, display: "flex", flexDirection: "column", gap: 0.25 }}>
+        <SideItem item={{ Icon: MenuBookRounded, href: guideUrl(lang) }} label={t("user_guide")} onClick={onNavigate} />
         <SideItem item={{ Icon: FeedbackRounded }} label={t("feedback")} onClick={onFeedback} />
         {phone && <SideItem item={{ Icon: LogoutRounded }} label={t("logout")} onClick={onSignOut} />}
       </Box>
@@ -147,6 +150,7 @@ export default function Layout() {
           <Divider />
           <MenuItem onClick={() => { setMenu(null); nav("/settings"); }}><ListItemIcon><SettingsRounded fontSize="small" /></ListItemIcon><ListItemText>{t("nav_settings")}</ListItemText></MenuItem>
           {isAdmin && <MenuItem onClick={() => { setMenu(null); nav("/admin"); }}><ListItemIcon><AdminPanelSettingsRounded fontSize="small" /></ListItemIcon><ListItemText>{t("admin")}</ListItemText></MenuItem>}
+          <MenuItem component="a" href={guideUrl(lang)} target="_blank" rel="noopener" onClick={() => setMenu(null)}><ListItemIcon><MenuBookRounded fontSize="small" /></ListItemIcon><ListItemText>{t("user_guide")}</ListItemText></MenuItem>
           <MenuItem onClick={() => { setMenu(null); feedback(); }}><ListItemIcon><FeedbackRounded fontSize="small" /></ListItemIcon><ListItemText>{t("feedback")}</ListItemText></MenuItem>
           <MenuItem onClick={() => { setMenu(null); nav("/privacy"); }}><ListItemIcon><ShieldRounded fontSize="small" /></ListItemIcon><ListItemText>{t("privacy_title")}</ListItemText></MenuItem>
           <Divider />

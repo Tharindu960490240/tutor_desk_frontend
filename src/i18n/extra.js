@@ -225,6 +225,10 @@ const extra = {
   sub_admin: ["Tutors, sign-ups and feedback", "ගුරුවරුන්, ලියාපදිංචි වීම් සහ අදහස්", "ஆசிரியர்கள், பதிவுகள் மற்றும் கருத்துகள்"],
   menu_main: ["Main", "ප්‍රධාන", "முதன்மை"],
   menu_more: ["More", "තවත්", "மேலும்"],
+  user_guide: ["User guide", "පරිශීලක මාර්ගෝපදේශය", "பயனர் வழிகாட்டி"],
+  guide_pdf: ["User guide (PDF)", "පරිශීලක මාර්ගෝපදේශය (PDF)", "பயனர் வழிகாட்டி (PDF)"],
+  guide_new: ["New to TutorDesk?", "TutorDesk වලට අලුත්ද?", "TutorDesk க்குப் புதியவரா?"],
+  guide_all: ["All languages", "සියලු භාෂා", "எல்லா மொழிகளும்"],
 };
 
 export default extra;
