@@ -165,9 +165,9 @@ export function ChangeMeetingDialog({ cid, date, time, onClose }) {
         </ToggleButtonGroup>
       </Box>
       {kind !== "cancel" && (
-        <Stack direction="row" spacing={2}>
-          {kind === "move" && <TextField type="date" label={t("new_date")} value={newDate} onChange={e => setNewDate(e.target.value)} slotProps={{ inputLabel: { shrink: true } }} sx={{ flex: 1 }} />}
-          <TextField type="time" label={t("new_time")} value={newTime} onChange={e => setNewTime(e.target.value)} slotProps={{ inputLabel: { shrink: true } }} sx={{ flex: 1 }} />
+        <Stack direction="row" sx={{ gap: 1.5, flexWrap: "wrap" }}>
+          {kind === "move" && <TextField type="date" label={t("new_date")} value={newDate} onChange={e => setNewDate(e.target.value)} slotProps={{ inputLabel: { shrink: true } }} sx={{ flex: "1 1 150px" }} />}
+          <TextField type="time" label={t("new_time")} value={newTime} onChange={e => setNewTime(e.target.value)} slotProps={{ inputLabel: { shrink: true } }} sx={{ flex: "1 1 118px" }} />
         </Stack>
       )}
       <TextField label={t("note_opt")} value={note} onChange={e => setNote(e.target.value)} placeholder={t("note_ph")} slotProps={{ htmlInput: { maxLength: 300 } }} />

@@ -29,7 +29,9 @@ function useForm(initial, validate) {
   const [touched, setTouched] = useState({});
   const [submitted, setSubmitted] = useState(false);
   const errors = validate(form);
-  const show = field => !!((submitted || touched[field]) && errors[field]);
+  // Empty fields only turn red after the button is pressed; a typed-in mistake shows when leaving the field.
+  const filled = field => typeof form[field] === "string" ? form[field].trim() !== "" : !!form[field];
+  const show = field => !!((submitted || (touched[field] && filled(field))) && errors[field]);
   const bind = field => ({
     value: form[field],
     onChange: e => setForm(f => ({ ...f, [field]: e.target.value })),
@@ -153,7 +155,7 @@ export default function Auth({ setLang }) {
         <PasswordField label={reg ? t("new_pw") : t("password")} autoComplete={reg ? "new-password" : "current-password"} {...f.bind("password")}
           helperText={f.show("password") ? (reg ? t("pw_weak") : t("pw_required")) : ""} />
         {reg && <>
-          <PasswordField label={t("confirm_pw")} autoComplete="new-password" showToggle={false} {...f.bind("confirmPassword")} helperText={f.show("confirmPassword") ? t("pw_mismatch") : ""} />
+          <PasswordField label={t("confirm_pw")} autoComplete="new-password" {...f.bind("confirmPassword")} helperText={f.show("confirmPassword") ? t("pw_mismatch") : ""} />
           <PasswordRules value={f.form.password} hints={[f.form.name, f.form.email]} />
         </>}
         {!reg && cfg?.emailEnabled && (
@@ -198,7 +200,7 @@ export function ResetPassword({ setLang }) {
       {!token ? <Alert severity="error">{t("bad_token")}</Alert> : (
         <Stack component="form" spacing={1.75} onSubmit={submit} noValidate>
           <PasswordField label={t("new_pw")} autoComplete="new-password" autoFocus {...f.bind("password")} helperText={f.show("password") ? t("pw_weak") : ""} />
-          <PasswordField label={t("confirm_pw")} autoComplete="new-password" showToggle={false} {...f.bind("confirmPassword")} helperText={f.show("confirmPassword") ? t("pw_mismatch") : ""} />
+          <PasswordField label={t("confirm_pw")} autoComplete="new-password" {...f.bind("confirmPassword")} helperText={f.show("confirmPassword") ? t("pw_mismatch") : ""} />
           <PasswordRules value={f.form.password} />
           {err && <Alert severity="error">{err}</Alert>}
           <Button type="submit" variant="contained" disabled={busy} sx={{ minHeight: 42 }}>{t("save")}</Button>

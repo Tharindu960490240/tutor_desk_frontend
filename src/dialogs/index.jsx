@@ -228,9 +228,9 @@ export function ClassForm({ cid, onClose }) {
                 <TextField select size="small" label={t("day")} value={s.day} onChange={e => setSes(i, "day", +e.target.value)} sx={{ flex: { xs: "1 1 100%", sm: "1.3 1 0" }, minWidth: 0 }}>
                   {[1, 2, 3, 4, 5, 6, 0].map(d => <MenuItem key={d} value={d}>{dayLong(d)}</MenuItem>)}
                 </TextField>
-                <TextField size="small" type="time" label={t("c_time")} value={s.time} onChange={e => setSes(i, "time", e.target.value)} slotProps={{ inputLabel: { shrink: true } }} sx={{ flex: "1 1 0", minWidth: 0 }} />
-                <TextField size="small" type="number" label={t("c_dur")} value={s.duration} onChange={e => setSes(i, "duration", e.target.value)} slotProps={{ htmlInput: { min: 0, step: 5 } }} sx={{ flex: "0.8 1 0", minWidth: 0 }} />
-                <Tooltip title={t("remove")}><span><IconButton onClick={() => delSes(i)} aria-label={`${t("remove")}: ${dayShort(s.day)} ${fmtTime(s.time)}`}><DeleteRounded /></IconButton></span></Tooltip>
+                <TextField size="small" type="time" label={t("c_time")} value={s.time} onChange={e => setSes(i, "time", e.target.value)} slotProps={{ inputLabel: { shrink: true } }} sx={{ flex: "1 1 118px", minWidth: 112 }} />
+                <TextField size="small" type="number" label={t("c_dur")} value={s.duration} onChange={e => setSes(i, "duration", e.target.value)} slotProps={{ htmlInput: { min: 0, step: 5 } }} sx={{ flex: "0.7 1 80px", minWidth: 72 }} />
+                <Tooltip title={t("remove")}><span style={{ marginLeft: "auto" }}><IconButton onClick={() => delSes(i)} aria-label={`${t("remove")}: ${dayShort(s.day)} ${fmtTime(s.time)}`}><DeleteRounded /></IconButton></span></Tooltip>
               </Stack>
               {perDay[s.day] > 1 && <Box sx={{ pt: 0.75, pl: 0.5 }}><Pill tone="info" sx={{ height: 22, fontSize: 11.5 }}>{dayShort(s.day)} · {t("twice_today", { n: perDay[s.day] })}</Pill></Box>}
             </Box>
@@ -248,8 +248,8 @@ export function ClassForm({ cid, onClose }) {
             })}
           </Stack>
           <Stack direction="row" sx={{ gap: 1, alignItems: "center", flexWrap: "wrap" }}>
-            <TextField size="small" type="time" label={t("c_time")} value={q.time} onChange={e => setQ(x => ({ ...x, time: e.target.value }))} slotProps={{ inputLabel: { shrink: true } }} sx={{ width: 130 }} />
-            <TextField size="small" type="number" label={t("c_dur")} value={q.duration} onChange={e => setQ(x => ({ ...x, duration: e.target.value }))} slotProps={{ htmlInput: { min: 0, step: 5 } }} sx={{ width: 110 }} />
+            <TextField size="small" type="time" label={t("c_time")} value={q.time} onChange={e => setQ(x => ({ ...x, time: e.target.value }))} slotProps={{ inputLabel: { shrink: true } }} sx={{ flex: "1 1 118px", minWidth: 112, maxWidth: 160 }} />
+            <TextField size="small" type="number" label={t("c_dur")} value={q.duration} onChange={e => setQ(x => ({ ...x, duration: e.target.value }))} slotProps={{ htmlInput: { min: 0, step: 5 } }} sx={{ flex: "0.7 1 80px", minWidth: 72, maxWidth: 120 }} />
             <Button variant="tonal" startIcon={<AddRounded />} onClick={quickAdd} disabled={!q.days.length || !/^\d\d:\d\d$/.test(q.time)}>{q.days.length ? t("add_days", { n: q.days.length }) : t("add_days_none")}</Button>
           </Stack>
         </Box>

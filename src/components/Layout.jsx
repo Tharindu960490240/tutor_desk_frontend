@@ -118,10 +118,10 @@ export default function Layout() {
   return (
     <Box sx={{ height: "100dvh", display: "flex", flexDirection: "column", bgcolor: "background.default" }}>
       {/* ───────── Header (full width, like the AFC portal) ───────── */}
-      <Box component="header" sx={{ flex: "none", height: { xs: 58, md: HEADER }, display: "flex", alignItems: "center", gap: { xs: 0.5, sm: 1.25 }, px: { xs: 1, md: 3 }, bgcolor: k.surface, borderBottom: `1px solid ${k.outlineVariant}`, zIndex: 20, position: "relative" }}>
+      <Box component="header" sx={{ flex: "none", height: { xs: 58, md: HEADER }, display: "flex", alignItems: "center", gap: { xs: 0.25, sm: 1.25 }, px: { xs: 0.5, sm: 1, md: 3 }, minWidth: 0, bgcolor: k.surface, borderBottom: `1px solid ${k.outlineVariant}`, zIndex: 20, position: "relative" }}>
         {!desktop && <IconButton onClick={() => setDrawer(true)} aria-label={t("menu")}><MenuRounded /></IconButton>}
         <Box component={NavLink} to="/" aria-label="TutorDesk" sx={{ display: "inline-flex", textDecoration: "none", color: "text.primary", borderRadius: 2, "&:focus-visible": { outline: `2px solid ${theme.palette.primary.main}` } }}>
-          <Logo size={desktop ? 34 : 30} />
+          <Logo size={desktop ? 34 : 28} sx={{ "@media (max-width:379px)": { "& > span": { display: "none" } } }} />
         </Box>
         {desktop && <Chip size="small" label={t("beta")} onClick={feedback} sx={{ ml: 0.5, height: 24, fontSize: 11.5, bgcolor: k.primaryContainer, color: k.onPrimaryContainer }} />}
         <Box sx={{ flex: 1 }} />
@@ -133,21 +133,22 @@ export default function Layout() {
         </Tooltip>
         <Select size="small" value={lang} onChange={e => changeLang(e.target.value)} aria-label={t("language")}
           renderValue={v => (desktop ? LANG_NAMES[v] : { en: "EN", si: "සිං", ta: "தமி" }[v])}
-          sx={{ height: 36, fontSize: 13.5, fontWeight: 600, borderRadius: 999, "& .MuiSelect-select": { py: 0.5, pl: 1.75 } }}>
+          sx={{ height: 34, fontSize: 13, fontWeight: 600, borderRadius: 999, flex: "none", "& .MuiSelect-select": { py: 0.5, pl: { xs: 1.25, md: 1.75 } } }}>
           {LANGS.map(l => <MenuItem key={l} value={l}>{LANG_NAMES[l]}</MenuItem>)}
         </Select>
         <Tooltip title={mode === "dark" ? t("theme_light") : t("theme_dark")}>
-          <IconButton onClick={toggle} aria-label={mode === "dark" ? t("theme_light") : t("theme_dark")}>{mode === "dark" ? <LightModeRounded /> : <DarkModeRounded />}</IconButton>
+          <IconButton onClick={toggle} sx={{ display: { xs: "none", sm: "inline-flex" } }} aria-label={mode === "dark" ? t("theme_light") : t("theme_dark")}>{mode === "dark" ? <LightModeRounded /> : <DarkModeRounded />}</IconButton>
         </Tooltip>
         {!desktop && <Tooltip title={t("nav_reminders")}><IconButton component={NavLink} to="/reminders" aria-label={t("nav_reminders")}><NotificationsRounded /></IconButton></Tooltip>}
         <Box component="button" type="button" onClick={e => setMenu(e.currentTarget)} aria-label={t("account")}
-          sx={{ all: "unset", cursor: "pointer", display: "flex", alignItems: "center", gap: 1, borderRadius: 999, p: 0.5, pr: { xs: 0.5, md: 1.25 }, "&:hover": { bgcolor: k.surface3 }, "&:focus-visible": { outline: `2px solid ${theme.palette.primary.main}` } }}>
-          <Avatar sx={{ width: 34, height: 34, fontSize: 14, bgcolor: "primary.main", color: k.onPrimary }}>{initials(name)}</Avatar>
+          sx={{ all: "unset", cursor: "pointer", display: "flex", alignItems: "center", gap: 1, flex: "none", borderRadius: 999, p: 0.5, pr: { xs: 0.5, md: 1.25 }, "&:hover": { bgcolor: k.surface3 }, "&:focus-visible": { outline: `2px solid ${theme.palette.primary.main}` } }}>
+          <Avatar sx={{ width: { xs: 32, md: 34 }, height: { xs: 32, md: 34 }, fontSize: 14, bgcolor: "primary.main", color: k.onPrimary }}>{initials(name)}</Avatar>
           {desktop && <Typography noWrap sx={{ fontSize: 14, fontWeight: 600, maxWidth: 140 }}>{D?.user?.name}</Typography>}
         </Box>
         <Menu anchorEl={menu} open={!!menu} onClose={() => setMenu(null)} anchorOrigin={{ vertical: "bottom", horizontal: "right" }} transformOrigin={{ vertical: "top", horizontal: "right" }} slotProps={{ paper: { sx: { width: 240, mt: 1 } } }}>
           <Box sx={{ px: 1.75, py: 1.25 }}><Typography sx={{ fontWeight: 700, fontSize: 14 }}>{D?.user?.name}</Typography><Typography sx={{ fontSize: 12, color: "text.secondary", overflowWrap: "anywhere" }}>{D?.user?.email}</Typography></Box>
           <Divider />
+          <MenuItem onClick={() => { toggle(); }} sx={{ display: { sm: "none" } }}><ListItemIcon>{mode === "dark" ? <LightModeRounded fontSize="small" /> : <DarkModeRounded fontSize="small" />}</ListItemIcon><ListItemText>{mode === "dark" ? t("theme_light") : t("theme_dark")}</ListItemText></MenuItem>
           <MenuItem onClick={() => { setMenu(null); nav("/settings"); }}><ListItemIcon><SettingsRounded fontSize="small" /></ListItemIcon><ListItemText>{t("nav_settings")}</ListItemText></MenuItem>
           {isAdmin && <MenuItem onClick={() => { setMenu(null); nav("/admin"); }}><ListItemIcon><AdminPanelSettingsRounded fontSize="small" /></ListItemIcon><ListItemText>{t("admin")}</ListItemText></MenuItem>}
           <MenuItem component="a" href={guideUrl(lang)} target="_blank" rel="noopener" onClick={() => setMenu(null)}><ListItemIcon><MenuBookRounded fontSize="small" /></ListItemIcon><ListItemText>{t("user_guide")}</ListItemText></MenuItem>

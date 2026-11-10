@@ -81,10 +81,17 @@ export function makeTheme(mode) {
       },
       MuiIconButton: { styleOverrides: { root: { "&:hover": { backgroundColor: k.surface3 } } } },
       MuiChip: { styleOverrides: { root: { borderRadius: 999, fontWeight: 600 } } },
-      MuiDialog: { styleOverrides: { paper: { borderRadius: 14, backgroundColor: k.surface, border: `1px solid ${k.outlineVariant}`, boxShadow: "0 20px 50px rgba(0,0,0,.18)" } } },
-      MuiDialogTitle: { styleOverrides: { root: { fontWeight: 700, fontSize: 18, padding: "16px 24px" } } },
-      MuiDialogContent: { styleOverrides: { root: { padding: "20px 24px !important", borderTop: `1px solid ${k.outlineVariant}`, borderBottom: `1px solid ${k.outlineVariant}` } } },
-      MuiDialogActions: { styleOverrides: { root: { padding: "14px 24px 18px", gap: 6 } } },
+      MuiDialog: {
+        styleOverrides: {
+          paper: {
+            borderRadius: 14, backgroundColor: k.surface, border: `1px solid ${k.outlineVariant}`, boxShadow: "0 20px 50px rgba(0,0,0,.18)",
+            "@media (max-width:599.95px)": { margin: 12, width: "calc(100% - 24px)", maxWidth: "calc(100% - 24px) !important", maxHeight: "calc(100% - 24px)" },
+          },
+        },
+      },
+      MuiDialogTitle: { styleOverrides: { root: { fontWeight: 700, fontSize: 18, padding: "16px 24px", "@media (max-width:599.95px)": { padding: "14px 16px" } } } },
+      MuiDialogContent: { styleOverrides: { root: { padding: "20px 24px !important", "@media (max-width:599.95px)": { padding: "16px !important" }, borderTop: `1px solid ${k.outlineVariant}`, borderBottom: `1px solid ${k.outlineVariant}` } } },
+      MuiDialogActions: { styleOverrides: { root: { padding: "14px 24px 18px", gap: 6, flexWrap: "wrap", "@media (max-width:599.95px)": { padding: "12px 16px 14px" } } } },
       // Compact form fields everywhere: text fields, dropdowns, date/time pickers
       MuiTextField: { defaultProps: { size: "small" } },
       MuiSelect: { defaultProps: { size: "small" } },

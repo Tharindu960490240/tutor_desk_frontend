@@ -49,7 +49,7 @@ function PasswordDialog({ onClose }) {
   const [v, setV] = useState({ cur: "", next: "", again: "" });
   const [touched, setTouched] = useState({}); const [submitted, setSubmitted] = useState(false); const [err, setErr] = useState("");
   const errors = { cur: !v.cur, next: !isStrongPassword(v.next), again: !v.again || v.again !== v.next };
-  const show = k => !!((submitted || touched[k]) && errors[k]);
+  const show = k => !!((submitted || (touched[k] && v[k] !== "")) && errors[k]);
   const bind = k => ({ value: v[k], error: show(k), onChange: e => { setV(x => ({ ...x, [k]: e.target.value })); setErr(""); }, onBlur: () => setTouched(x => ({ ...x, [k]: true })) });
   const submit = async e => {
     e.preventDefault(); setSubmitted(true);
@@ -63,7 +63,7 @@ function PasswordDialog({ onClose }) {
       <DialogContent sx={{ display: "flex", flexDirection: "column", gap: 1.75, pt: "20px !important" }}>
         <PasswordField label={t("current_pw")} autoComplete="current-password" autoFocus {...bind("cur")} helperText={show("cur") ? t("pw_required") : ""} />
         <PasswordField label={t("new_pw")} autoComplete="new-password" {...bind("next")} helperText={show("next") ? t("pw_weak") : ""} />
-        <PasswordField label={t("confirm_pw")} autoComplete="new-password" showToggle={false} {...bind("again")} helperText={show("again") ? t("pw_mismatch") : ""} />
+        <PasswordField label={t("confirm_pw")} autoComplete="new-password" {...bind("again")} helperText={show("again") ? t("pw_mismatch") : ""} />
         <PasswordRules value={v.next} hints={[D?.user?.name, D?.user?.email]} />
         {err && <Alert severity="error">{err}</Alert>}
       </DialogContent>

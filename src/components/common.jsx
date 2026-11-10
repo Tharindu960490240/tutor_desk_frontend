@@ -75,7 +75,7 @@ export function StatCard({ hero, icon: Icon, iconColor = "primary.main", label, 
         <Stack direction="row" spacing={1.5} sx={{ alignItems: "flex-start", justifyContent: "space-between" }}>
           <Box sx={{ minWidth: 0 }}>
             <Typography sx={{ fontSize: 13, fontWeight: 500, color: "text.secondary", mb: 0.75 }}>{label}</Typography>
-            <Typography className="num" sx={{ fontSize: { xs: 22, sm: 26 }, fontWeight: 700, lineHeight: 1.15, letterSpacing: "-.01em", color: hero ? "primary.main" : "text.primary" }}>{value}</Typography>
+            <Typography className="num" sx={{ fontSize: { xs: 19, sm: 26 }, fontWeight: 700, lineHeight: 1.15, letterSpacing: "-.01em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: hero ? "primary.main" : "text.primary", "@media (max-width:359.95px)": { fontSize: 17 } }}>{value}</Typography>
           </Box>
           {Icon && (
             <Box sx={{ width: 42, height: 42, borderRadius: 2.5, display: { xs: "none", sm: "grid" }, placeItems: "center", flex: "none", background: hero ? `linear-gradient(135deg, ${c} 0%, ${k.primary2} 100%)` : k.primaryContainer, color: hero ? k.onPrimary : iconColor, "& svg": { fontSize: 22 } }}>
