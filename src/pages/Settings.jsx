@@ -45,7 +45,7 @@ function RestoreDialog({ onClose }) {
 }
 
 function PasswordDialog({ onClose }) {
-  const { t } = useI18n(); const actions = useActions(); const snack = useSnack(); const withLoading = useLoading();
+  const D = useDomain(); const { t } = useI18n(); const actions = useActions(); const snack = useSnack(); const withLoading = useLoading();
   const [v, setV] = useState({ cur: "", next: "", again: "" });
   const [touched, setTouched] = useState({}); const [submitted, setSubmitted] = useState(false); const [err, setErr] = useState("");
   const errors = { cur: !v.cur, next: !isStrongPassword(v.next), again: !v.again || v.again !== v.next };
@@ -64,7 +64,7 @@ function PasswordDialog({ onClose }) {
         <PasswordField label={t("current_pw")} autoComplete="current-password" autoFocus {...bind("cur")} helperText={show("cur") ? t("pw_required") : ""} />
         <PasswordField label={t("new_pw")} autoComplete="new-password" {...bind("next")} helperText={show("next") ? t("pw_weak") : ""} />
         <PasswordField label={t("confirm_pw")} autoComplete="new-password" showToggle={false} {...bind("again")} helperText={show("again") ? t("pw_mismatch") : ""} />
-        <PasswordRules value={v.next} />
+        <PasswordRules value={v.next} hints={[D?.user?.name, D?.user?.email]} />
         {err && <Alert severity="error">{err}</Alert>}
       </DialogContent>
       <DialogActions sx={{ p: 2.5, pt: 0 }}><Button onClick={onClose}>{t("cancel")}</Button><Button type="submit" variant="contained">{t("save")}</Button></DialogActions>
